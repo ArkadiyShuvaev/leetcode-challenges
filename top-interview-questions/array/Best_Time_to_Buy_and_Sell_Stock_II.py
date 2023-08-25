@@ -54,14 +54,22 @@ class Solution:
         return max_profit
 
     def __get_profit_for_range(self, idx_start, idx_end, prices):
-        max_profit = 0
         if idx_end - idx_start < 2:
-            return max_profit
+            return 0
 
-        for iteration_number in range(idx_start, idx_end + 1):
-            profit_for_left_part = self.__get_profit_for_range(idx_start, idx_start + iteration_number, prices)
-            profit_for_subrange_of_left_part = self.__get_profit_for_range(idx_start, idx_start + iteration_number, prices)
-            profit_for_right_part = self.__get_profit_for_range(idx_start + iteration_number + 1, idx_end, prices)
+        # get max profit for the entire range from idx_start to idx_end
+        max_profit = self.__get_max_diff(idx_start, idx_end, prices)
+
+        for iteration_number in range(1, idx_end - idx_start):
+            idx_end_for_left = idx_start + iteration_number
+            profit_for_left_part = self.__get_max_diff(idx_start, idx_end_for_left, prices)
+            profit_for_divided_left_part = self.__get_profit_for_range(idx_start, idx_end_for_left, prices)
+            profit_for_left_part = max(profit_for_left_part, profit_for_divided_left_part)
+
+            idx_start_for_right = idx_start + iteration_number + 1
+            profit_for_right_part = self.__get_max_diff(idx_start_for_right, idx_end, prices)
+            profit_for_divided_right_part = self.__get_profit_for_range(idx_start_for_right, idx_end, prices)
+            profit_for_right_part = max(profit_for_right_part, profit_for_divided_right_part)
 
             iteration_profit = profit_for_left_part + profit_for_right_part
             if iteration_profit > max_profit:
@@ -69,27 +77,7 @@ class Solution:
 
         return max_profit
 
-    # def __get_profit_for_range(self, idx_start: int, idx_end: int, prices: List[int]) -> int:
-    #     profit = 0
-
-    #     range_length = idx_end - idx_start
-
-    #     if range_length < 3:
-    #         return profit
-
-    #     idx_median = idx_start + math.ceil(range_length / 2) - 1
-
-    #     profit_for_left_part = self.__get_max_profit_for_range(idx_start, idx_median, prices)
-    #     profit_for_range = self.__get_profit_for_range(idx_start, idx_median, prices)
-    #     profit_for_left_part = max(profit_for_left_part, profit_for_range)
-
-    #     profit_for_right_part = self.__get_max_profit_for_range(idx_median + 1, idx_end, prices)
-    #     profit_for_range = self.__get_profit_for_range(idx_median + 1, idx_end, prices)
-    #     profit_for_right_part = max(profit_for_right_part, profit_for_range)
-
-    #     return profit_for_left_part + profit_for_right_part
-
-    def __get_max_profit_for_range(self, idx_start: int, idx_end: int, price_arr: List[int]) -> int:
+    def __get_max_diff(self, idx_start: int, idx_end: int, price_arr: List[int]) -> int:
         """
         Calculates the maximum profit for a given range of prices.
 
@@ -127,3 +115,4 @@ print(solution.maxProfit([1,2,3,4,5])) # 4
 print(solution.maxProfit([7,6,4,3,1])) # 0
 print(solution.maxProfit([2,1,2,0,1])) # 2
 print(solution.maxProfit([1,2,4,2,5,7,2,4,9,0])) #15
+print(solution.maxProfit([1,2])) #1
