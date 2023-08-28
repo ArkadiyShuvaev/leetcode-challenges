@@ -21,19 +21,18 @@ from typing import List
 
 class Solution:
     def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
-        is_count_reset = False
+        if nums is None or len(nums) == 0:
+            return 0
+
         current_consecutive_ones = 0
         max_consecutive_ones = 0
-        for _, item in enumerate(nums):
-            if item == 1 and is_count_reset:
-                is_count_reset = False
-                current_consecutive_ones = 0
 
-            if item == 1:
+        for num in nums:
+            if num:
                 current_consecutive_ones += 1
             else:
-                is_count_reset = True
                 max_consecutive_ones = max(max_consecutive_ones, current_consecutive_ones)
+                current_consecutive_ones = 0
 
         return max(max_consecutive_ones, current_consecutive_ones)
 
