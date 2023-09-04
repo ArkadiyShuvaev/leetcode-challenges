@@ -30,7 +30,7 @@ class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
         nums_len = len(nums)
         result = nums_len
-        buf_idx_l, buf_idx_r = nums_len - 1, nums_len - 1
+        buf_idx_r = nums_len - 1
 
         for i in range(nums_len - 1, -1, -1):
             if nums[i] == val:
@@ -40,10 +40,8 @@ class Solution:
                 else:
                     nums[i] = nums[buf_idx_r]
                     nums[buf_idx_r] = -100 # TODO Remove after debagging
-                    buf_idx_l = i
                     buf_idx_r -= 1
             else:
-                buf_idx_l = i
                 if buf_idx_r == nums_len - 1 and result != nums_len: # this case occurs when the last element is the element that has to be removed.
                     buf_idx_r = i
 
@@ -62,6 +60,6 @@ nums = [3,2,2,3]
 print(solution.removeElement(nums, val = 3)) # 2
 print(nums) # [2,2,_,_]
 
-nums = [0,1,2,2,3,0,4,2]
-print(solution.removeElement(nums, val = 2)) # 3
-print(nums) # [0,1,4,0,3]
+nums = [0,3,1,1,0,1,3,0,3,3,1,1]
+print(solution.removeElement(nums, val = 1)) # 7
+print(nums) # [0,3,3,3,0,0,3]
