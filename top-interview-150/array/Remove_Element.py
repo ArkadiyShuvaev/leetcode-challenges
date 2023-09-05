@@ -30,30 +30,27 @@ class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
         nums_len = len(nums)
         result = nums_len
-        buf_idx_r = nums_len - 1
+        idx_of_last_valid_elem: int = -1
 
         for i in range(nums_len - 1, -1, -1):
             if nums[i] == val:
                 result -= 1
-                if i == buf_idx_r: # process the found value at the end of the array
-                    nums[i] = -100 # TODO Remove after debagging
-                else:
-                    nums[i] = nums[buf_idx_r]
-                    nums[buf_idx_r] = -100 # TODO Remove after debagging
-                    buf_idx_r -= 1
+                if idx_of_last_valid_elem != -1: # the value is not at the end of the array
+                    nums[i] = nums[idx_of_last_valid_elem]
+                    idx_of_last_valid_elem -= 1
             else:
-                if buf_idx_r == nums_len - 1 and result != nums_len: # this case occurs when the last element is the element that has to be removed.
-                    buf_idx_r = i
+                if idx_of_last_valid_elem == -1: # this case occurs when the last element is the element that has to be removed.
+                    idx_of_last_valid_elem = i
 
         return result
 
 solution = Solution()
 nums = [0,2,2,2,4,5,6]
-print(solution.removeElement(nums, val = 2)) # 3
+print(solution.removeElement(nums, val = 2)) # 4
 print(nums) # [0,4,5,6,_,_,_]
 
 nums = [0,1,2,2,3,0,4,2]
-print(solution.removeElement(nums, val = 2)) # 3
+print(solution.removeElement(nums, val = 2)) # 5
 print(nums) # [0,1,0,4,3,-100,-100,-100]
 
 nums = [3,2,2,3]
@@ -63,3 +60,11 @@ print(nums) # [2,2,_,_]
 nums = [0,3,1,1,0,1,3,0,3,3,1,1]
 print(solution.removeElement(nums, val = 1)) # 7
 print(nums) # [0,3,3,3,0,0,3]
+
+nums = [0,1,1,1,1,1,1,1,1,1,1]
+print(solution.removeElement(nums, val = 1)) # 1
+print(nums) # [0,_,....]
+
+nums = [1,1,1,1,1,1,1,1,1,1,0]
+print(solution.removeElement(nums, val = 1)) # 1
+print(nums) # [0,_,....]
