@@ -26,9 +26,7 @@ class Solution:
         if nums_len == 1:
             return []
 
-        all_numbers_set = set()
-        for i in range(1, nums_len + 1):
-          all_numbers_set.add(i)
+        all_numbers_set = set(range(1, nums_len + 1))
 
         for i in range(0, nums_len):
             value = nums[i]
