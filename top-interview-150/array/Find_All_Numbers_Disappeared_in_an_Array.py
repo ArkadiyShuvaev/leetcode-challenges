@@ -21,7 +21,8 @@
 from typing import List
 
 class Solution:
-    def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
+    # It is O(n) complexity with extra memory (set)
+    def findDisappearedNumbersUsingSet(self, nums: List[int]) -> List[int]:
         nums_len = len(nums)
         if nums_len == 1:
             return []
@@ -35,13 +36,33 @@ class Solution:
 
         return list(all_numbers_set)
 
+    # This method has O(n) complexity with extra memory (array)
+    def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
+        nums_len = len(nums)
+        if nums_len == 1:
+            return []
+
+        nums.sort()
+        disappeared_nums = []
+        previous_val = 0
+
+        for i in range(0, nums_len):
+            current_value = nums[i]
+            if current_value - previous_val > 1:
+                for i in range(previous_val + 1, current_value):
+                    disappeared_nums.append(i)
+
+            previous_val = current_value
+
+        return disappeared_nums
+
 solution = Solution()
 
 
+assert solution.findDisappearedNumbers([1,1,1]) == [2,3]
 assert solution.findDisappearedNumbers([4,3,2,7,8,2,3,1]) == [5, 6]
 assert solution.findDisappearedNumbers([4,3,2,7,8,2,3,2]) == [1, 5, 6] # [2, 2, 2, 3, 3, 4, 7, 8]
 assert solution.findDisappearedNumbers([4,3,2,7,7,2,3,1]) == [5, 6, 8]
 assert solution.findDisappearedNumbers([3,2]) == [1]
 assert solution.findDisappearedNumbers([1,1]) == [2]
-assert solution.findDisappearedNumbers([1,1,1]) == [2,3]
 assert solution.findDisappearedNumbers([1]) == []
