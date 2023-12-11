@@ -27,7 +27,7 @@ class Solution:
     def dominantIndex(self, nums: List[int]) -> int:
         max_num = 0
         next_max_num = 0
-        max_idx = 0
+        max_idx = -1
 
         for i in range(0, len(nums)):
             if nums[i] > max_num:
@@ -35,23 +35,18 @@ class Solution:
                 max_num = nums[i]
                 max_idx = i
 
-            elif nums[i] > next_max_num and nums[i] <= max_num:
+            elif nums[i] > next_max_num:
                 next_max_num = nums[i]
 
-        if next_max_num == 0 and max_num > 0:
+        if max_num >= next_max_num * 2:
             return max_idx
-        if next_max_num == 0 and max_num == 0:
-            return -1
-        if max_num / next_max_num >= 2:
-            return max_idx
-
         return -1
 
 solution = Solution()
 
+assert solution.dominantIndex([0,0]) == -1
 assert solution.dominantIndex([3,6,1,0]) == 1
 assert solution.dominantIndex([10,10]) == -1
-assert solution.dominantIndex([0,0]) == -1
 assert solution.dominantIndex([1,2,3,4]) == -1
 assert solution.dominantIndex([10,5,1,0]) == 0
 assert solution.dominantIndex([10,5,1,9]) == -1
