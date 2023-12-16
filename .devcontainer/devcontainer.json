@@ -21,7 +21,8 @@
 				"ms-python.pylint",
 				"ms-python.python",
 				"ms-python.isort",
-				"ms-python.vscode-pylance"
+				"ms-python.vscode-pylance",
+				"shardulm94.trailing-spaces"
 			]
 		}
 	}
