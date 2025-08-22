@@ -40,11 +40,10 @@ class Solution:
 
         for pointer_idx in range(len(nums) - 1):
             index_of[nums[pointer_idx]] = pointer_idx
-            next_pointer_idx = pointer_idx + 1
-            required_number = target - nums[next_pointer_idx]
+            required_number = target - nums[pointer_idx + 1]
 
             if required_number in index_of:
-                return [index_of[required_number], next_pointer_idx]
+                return [index_of[required_number], pointer_idx + 1]
 
         return []
 
