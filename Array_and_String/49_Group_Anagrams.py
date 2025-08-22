@@ -21,38 +21,25 @@
 # 0 <= strs[i].length <= 100
 # strs[i] consists of lowercase English letters.
 
+from collections import defaultdict
 from typing import List
 
 
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        result = []
 
-        signatures = {}
+        anargams_by_sign = defaultdict(list)
 
-        for idx, word in enumerate(strs):
+        for word in strs:
             sign = "".join(sorted(word))
+            anargams_by_sign[sign].append(word)
 
-            if sign in signatures:
-                signatures[sign].append(idx)
-                continue
 
-            signatures[sign] = []
-            signatures[sign].append(idx)
-
-        for sign in signatures:
-            anargams = []
-            values = signatures[sign]
-            for idx in values:
-                anargams.append(strs[idx])
-
-            result.append(anargams)
-
-        return result
+        return list(anargams_by_sign.values())
 
 
 solution = Solution()
 
-# assert solution.groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]) == [["ate", "eat", "tea"], ["nat", "tan"], ["bat"]]
+assert solution.groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]) == [["ate", "eat", "tea"], ["nat", "tan"], ["bat"]]
 assert solution.groupAnagrams([""]) == [[""]]
 assert solution.groupAnagrams(["a"]) == [["a"]]
