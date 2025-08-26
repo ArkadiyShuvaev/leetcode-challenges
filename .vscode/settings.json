@@ -14,5 +14,13 @@
     ],
     "github.copilot.enable": {
         "*": false
-    }
+    },
+
+    "javascript.validate.enable": true,
+
+    // run ESLint on JS files
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact"
+    ]
 }

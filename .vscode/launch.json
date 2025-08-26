@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",              // use the built-in Node debugger
+      "request": "launch",
+      "name": "Launch Active JS File",
+      "program": "${file}",            // debug the current editor file
+      "cwd": "${workspaceFolder}",     // project root
+      "console": "integratedTerminal", // use the terminal for stdin/stdout
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
+}
