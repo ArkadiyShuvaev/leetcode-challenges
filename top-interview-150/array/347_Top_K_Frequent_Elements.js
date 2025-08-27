@@ -55,9 +55,7 @@ var topKFrequent = function (nums, k) {
     //     4: []
     // }
     const frequencyMap = new Array();
-    for (const item of map) {
-        const key = item[0];
-        const value = item[1];
+    for (const [key, value] of map) {
 
         const existing = frequencyMap[value];
         if (existing === undefined) {
@@ -65,12 +63,11 @@ var topKFrequent = function (nums, k) {
             continue;
         }
 
-        const newValue = [...existing, key];
-        frequencyMap[value] = newValue;
+        frequencyMap[value].push(key);
     }
 
     const result = [];
-    for (let i = frequencyMap.length - 1; i >= 0; i--) {
+    for (let i = frequencyMap.length - 1; i >= 0 && result.length < k; i--) {
         const values = frequencyMap[i];
         if (values === undefined) {
             continue;
@@ -84,6 +81,9 @@ var topKFrequent = function (nums, k) {
 
 let result = topKFrequent([1, 1, 1, 2, 2, 3], 2);
 console.log(`[1, 2]: ${result}`);
-console.assert(topKFrequent([1, 1, 1, 2, 2, 3], 2) == [1, 2], "Test 1 failed");
-console.assert(topKFrequent([1], 1) == [1], "Test 2 failed");
-console.assert(topKFrequent([1,2,1,2,1,2,3,1,3,2], 2) == [1, 2], "Test 3 failed");
+
+result = topKFrequent([1], 1);
+console.log(`[1]: ${result}`);
+
+result = topKFrequent([1,2,1,2,1,2,3,1,3,2], 2);
+console.log(`[1, 2]: ${result}`);
