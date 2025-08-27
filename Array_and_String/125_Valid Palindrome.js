@@ -31,26 +31,29 @@
  * @return {boolean}
  */
 var isPalindrome = function (s) {
-    let convertedString = "";
-
-    for (let char of s) {
-        const regExp = /^[a-zA-Z0-9]/;
-        if (regExp.exec(char)) {
-            convertedString += char.toLowerCase();
-        }
-    }
-
-    if (convertedString.length <= 1) {
-        return true;
-    }
-
     let leftPointer = 0;
-    let rightPointer = convertedString.length - 1;
+    let rightPointer = s.length - 1;
+
+    /**
+     * @param {string} ch
+     * @return {boolean}
+     */
+    const isCharAlphanumeric = ch => /[a-zA-Z0-9]/.test(ch)
 
     while (leftPointer < rightPointer) {
-        if (convertedString.charAt(leftPointer) !== convertedString.charAt(rightPointer)) {
+
+        while (leftPointer < rightPointer && !isCharAlphanumeric(s[leftPointer])) {
+            leftPointer++;
+        }
+
+        while (leftPointer < rightPointer && !isCharAlphanumeric(s[rightPointer])) {
+            rightPointer--;
+        }
+
+        if (s[leftPointer].toLowerCase() !== s[rightPointer].toLocaleLowerCase()) {
             return false;
         }
+
         leftPointer++;
         rightPointer--;
     }
