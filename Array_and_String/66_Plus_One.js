@@ -36,27 +36,16 @@
  * @return {number[]}
  */
 var plusOne = function (digits) {
-    let idx = digits.length - 1;
+    for (let idx = digits.length - 1; idx >= 0; idx--) {
+        if (digits[idx] < 9) {
+            digits[idx] += 1;
+            return digits;
+        }
 
-    // [1,2,3] => [1,2,4]
-    if (digits[idx] < 9) {
-        digits[idx] += 1;
-        return digits;
-    }
-
-    while (digits[idx] === 9) {
         digits[idx] = 0;
-        idx--;
     }
 
-    // [9] => [1,0]
-    if (idx === -1) {
-        digits.unshift(1);
-        return digits;
-    }
-
-    // [8,9] => [9,9]
-    digits[idx] += 1;
+    digits.unshift(1);
     return digits;
 };
 
