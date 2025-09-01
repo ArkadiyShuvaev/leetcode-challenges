@@ -29,16 +29,25 @@
 var maxProfit = function (prices) {
     // Input: prices = [7,1,5,3,6,4]
     // Output: 5
-    let result = 0;
+    let maxProfit = 0;
+    let minPrice = Infinity;
 
-    for (let slowIdx = 0; slowIdx < prices.length - 1; slowIdx++) {
-        for (let fastIdx = slowIdx + 1; fastIdx < prices.length; fastIdx++) {
-            if (prices[fastIdx] - prices[slowIdx] > result) {
-                result = prices[fastIdx] - prices[slowIdx];
-            }
+    if (prices.length === 1) {
+        return 0;
+    }
+
+    for (let i = 0; i < prices.length; i++) {
+        const price = prices[i];
+        if (price - minPrice > maxProfit) {
+            maxProfit = price - minPrice;
+        }
+
+        if (minPrice > price) {
+            minPrice = price;
         }
     }
-    return result;
+
+    return maxProfit;
 };
 
 console.assert(maxProfit([7,1,5,3,6,4]) === 5, "Case 1 failed");
