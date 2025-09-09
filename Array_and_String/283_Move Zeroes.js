@@ -27,47 +27,18 @@
  @param { number[] } nums
  */
 function moveZeroes(nums) {
-    // Input: nums = [0,0,1,3,12]
-    // Output: [1,3,12,0,0]
+    let insertIdx = 0;
 
-    // Input: nums = [0,1,0,3,12]
-    // Output: [1,3,12,0,0]
-
-    // Input: nums = [1,3,0,12,0]
-    // Output: [1,3,12,0,0]
-
-    // Input: nums = [1,3,12,0,0]
-    // Output: [1,3,12,0,0]
-
-    if (nums.length === 1) {
-        return;
-    }
-
-    let fast = 0;
-    let slow = -1;
-
-    while (slow < fast) {
-        while (fast < nums.length) {
-            if (nums[fast] === 0 && slow === -1) { // TODO: improve
-                slow = fast;
-                fast++;
-                continue;
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] !== 0) {
+            nums[insertIdx] = nums[i];
+            if (insertIdx !== i) {
+                nums[i] = 0;
             }
-
-            if (nums[fast] !== 0 && slow !== -1) {
-                nums[slow] = nums[fast];
-                nums[fast] = 0;
-                //slow++;
-
-                while (slow <= fast && nums[slow] !== 0) {
-                    slow++;
-                }
-            }
-
-            fast++;
+            insertIdx++;
         }
-        slow++;
     }
+
 };
 
 let array = [0, 1, 0, 3, 12];
