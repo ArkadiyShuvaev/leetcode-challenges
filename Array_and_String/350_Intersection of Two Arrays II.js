@@ -31,10 +31,13 @@ var intersect = function (nums1, nums2) {
     // Input: nums1 = [1,2,2,1], nums2 = [2,2]
     // Output: [2,2]
 
+    const array_to_map = nums1.length < nums2.length ? nums1 : nums2;
+    const array_to_iterate  = nums1.length < nums2.length ? nums2 : nums1;
+
     const result = [];
     const map = new Map();
 
-    nums1.forEach((value) => {
+    array_to_map.forEach((value) => {
         if (map.has(value)) {
             map.set(value, map.get(value) + 1);
         } else {
@@ -42,7 +45,7 @@ var intersect = function (nums1, nums2) {
         }
     });
 
-    for (const number of nums2) {
+    for (const number of array_to_iterate) {
         if (map.has(number)) {
             result.push(number);
             let valueInMap = map.get(number);
