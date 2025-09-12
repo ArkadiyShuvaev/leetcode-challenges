@@ -26,7 +26,7 @@
  * @param {number[][]} nums
  * @return {number[]}
  */
-var intersection = function (nums) {
+var intersectionFirstAttempt = function (nums) {
     const result = [];
     const map = new Map();
 
@@ -59,6 +59,29 @@ var intersection = function (nums) {
 
 
     result.sort((a, b) => a - b);
+
+    return result;
+};
+
+/**
+ * @param {number[][]} nums
+ * @return {number[]}
+ */
+var intersection = function (nums) {
+    const result = [];
+    const frequencyArr = new Array(1001).fill(0);
+
+    for (const subArr of nums) {
+        for (const number of subArr) {
+            frequencyArr[number] += 1;
+        }
+    }
+
+    for (let idx = 0; idx < frequencyArr.length; idx++) {
+        if (frequencyArr[idx] === nums.length) {
+            result.push(idx);
+        }
+    }
 
     return result;
 };
